@@ -9,6 +9,7 @@
 #define SMMNODE_TYPE_FOODCHANCE         5
 #define SMMNODE_TYPE_FESTIVAL           6
 
+#define MAX_CHARNAME                200
 #define SMMNODE_TYPE_MAX                7
 
 typedef enum smmObjType {
@@ -40,16 +41,39 @@ typedef enum smmObjType {
     C-
 */
 
+typedef enum smmObjGrade {
+    smmObjGrade_Ap = 0,
+    smmObjGrade_A0,
+    smmObjGrade_Am,
+    smmObjGrade_Bp,
+    smmObjGrade_B0,
+    smmObjGrade_Bm,
+    smmObjGrade_Cp,
+    smmObjGrade_C0,
+    smmObjGrade_Cm
+} smmObjGrade_e;
+
+//1. 구조체 형식 정의
+typedef struct smmObject {
+       char name[MAX_CHARNAME];
+       smmObjType_e objType; 
+       int type;
+       int credit;
+       int energy;
+       smmObjGrade_e grade;
+} smmObject_t;
+
 
 //object generation
-void smmObj_genObject(char* name, smmObjType_e objType, int type, int credit, int energy, smmObjType_e grade);
-
+smmObject_t* smmObj_genObject(const char* name, smmObjType_e objType, int type, int credit, int energy, smmObjGrade_e grade);
 //member retrieving
-char* smmObj_getNodeName(int node_nr);
 
-int smmObj_getNodeType(int node_nr);
-int smmObj_getNodeCredit(int node_nr);
-int smmObj_getNodeEnergy(int node_nr);
+//char* smmObj_getNodeName(int node_nr);
+const char* smmObj_getNodeName(const void* obj);
+
+//int smmObj_getNodeType(int node_nr);
+//int smmObj_getNodeCredit(int node_nr);
+//int smmObj_getNodeEnergy(int node_nr);
 
 //element to string
 char* smmObj_getTypeName(int type);
